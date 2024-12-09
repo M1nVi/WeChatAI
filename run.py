@@ -5,7 +5,7 @@ from flask import Flask, request, jsonify
 from wxcloudrun import app
 
 # 获取存储在环境变量中的 GPT API 密钥
-OPENAI_API_KEY = os.getenv('ALIYUN_API_KEY')
+API_KEY = os.getenv('ALIYUN_API_KEY')
 if not ALIYUN_API_KEY:
     raise ValueError("API 密钥 ALIYUN_API_KEY 没有设置")
     
