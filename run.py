@@ -6,7 +6,9 @@ from wxcloudrun import app
 
 # 获取存储在环境变量中的 GPT API 密钥
 OPENAI_API_KEY = os.getenv('ALIYUN_API_KEY')
-
+if not ALIYUN_API_KEY:
+    raise ValueError("API 密钥 ALIYUN_API_KEY 没有设置")
+    
 # 调用 GPT API 的函数
 def get_gpt_response(user_message):
     url = 'https://dashscope.aliyuncs.com/compatible-mode/v1'
@@ -34,7 +36,7 @@ def wechat():
     user_message = request.json.get('user_message', '')
     
     if user_message:
-        # 调用 GPT API 获取回复
+        # 调用  API 获取回复
         gpt_response = get_gpt_response(user_message)
         return jsonify({'response': gpt_response})
     else:
