@@ -6,7 +6,7 @@ from wxcloudrun import app
 
 # 获取存储在环境变量中的 GPT API 密钥
 API_KEY = os.getenv('api_key')
-if not ALIYUN_API_KEY:
+if not api_key:
     raise ValueError("API 密钥 api_key 没有设置")
     
 # 调用 GPT API 的函数
