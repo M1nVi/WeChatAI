@@ -34,7 +34,7 @@ def get_gpt_response(user_message):
 
 # 验证微信服务器的请求
 @app.route('/wechat', methods=['GET', 'POST'])
-def wechat():
+def wechat_v1():
     if request.method == 'GET':
         # 微信服务器发来的验证请求，验证 Token
         token = '150'  # 设置你自己的 Token
