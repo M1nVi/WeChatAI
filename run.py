@@ -43,7 +43,6 @@ def wechat_v1():
     if data is None:
         return jsonify({'error': '请求体不能为空'}), 400
         
-    action = data.get('action', '')
     user_message = data.get('user_message', '')
 
     if not user_message:
