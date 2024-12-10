@@ -36,13 +36,14 @@ def wechat_v1():
     if not request.is_json:
         return jsonify({'error': '请求体必须是 JSON 格式'}), 400
 
-    action = data.get('action', '')
+   
     # 获取微信消息中的用户发送的内容
     data = request.get_json()  # 使用 get_json() 方法来安全地获取 JSON 数据
 
     if data is None:
         return jsonify({'error': '请求体不能为空'}), 400
-
+        
+    action = data.get('action', '')
     user_message = data.get('user_message', '')
 
     if not user_message:
