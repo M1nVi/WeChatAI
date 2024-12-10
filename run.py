@@ -6,7 +6,7 @@ from wxcloudrun import app
 
 # 获取存储在环境变量中的 GPT API 密钥
 API_KEY = os.getenv('api_key')
-if not api_key:
+if not API_KEY:
     raise ValueError("API 密钥 api_key 没有设置")
     
 # 调用 GPT API 的函数
@@ -14,7 +14,7 @@ def get_gpt_response(user_message):
     url = 'https://dashscope.aliyuncs.com/compatible-mode/v1'
     headers = {
         'Content-Type': 'application/json',
-        'Authorization': f'Bearer {api_key}'
+        'Authorization': f'Bearer {API_KEY}'
     }
     data = {
         'model': 'qwen-max',
