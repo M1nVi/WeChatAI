@@ -32,15 +32,26 @@ def get_gpt_response(user_message):
 # 处理微信消息的路由
 @app.route('/wechat', methods=['POST'])
 def wechat_v1():
+    # 检查请求体是否为 JSON 格式
+    if not request.is_json:
+        return jsonify({'error': '请求体必须是 JSON 格式'}), 400
+
     # 获取微信消息中的用户发送的内容
-    user_message = request.json.get('user_message', '')
+    data = request.get_json()  # 使用 get_json() 方法来安全地获取 JSON 数据
+
+    if data is None:
+        return jsonify({'error': '请求体不能为空'}), 400
+
+    user_message = data.get('user_message', '')
+
+    if not user_message:
+        return jsonify({'error': 'user_message 字段不能为空'}), 400
     
-    if user_message:
-        # 调用  API 获取回复
-        gpt_response = get_gpt_response(user_message)
-        return jsonify({'response': gpt_response})
-    else:
-        return jsonify({'response': "没有收到有效的消息"})
+    # 调用 GPT API 获取回复
+    gpt_response = get_gpt_response(user_message)
+    
+    return jsonify({'response': gpt_response})
+
 
 # 启动Flask Web服务
 if __name__ == '__main__':
