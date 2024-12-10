@@ -32,15 +32,21 @@ def get_gpt_response(user_message):
 # 处理微信消息的路由
 @app.route('/wechat', methods=['POST'])
 def wechat():
-    # 获取微信消息中的用户发送的内容
-    user_message = request.json.get('user_message', '')
-    
-    if user_message:
-        # 调用  API 获取回复
-        gpt_response = get_gpt_response(user_message)
-        return jsonify({'response': gpt_response})
-    else:
-        return jsonify({'response': "没有收到有效的消息"})
+    try:
+        print("Received request headers:", request.headers)  # 打印请求头
+        print("Received request body:", request.data)        # 打印请求体原始数据
+        print("Received JSON body:", request.json)           # 打印解析后的 JSON 数据
+
+        user_message = request.json.get('user_message', '')
+        
+        if user_message:
+            gpt_response = get_gpt_response(user_message)
+            return jsonify({'response': gpt_response})
+        else:
+            return jsonify({'response': "没有收到有效的消息"})
+    except Exception as e:
+        return jsonify({'error': str(e)})
+
 
 # 启动Flask Web服务
 if __name__ == '__main__':
