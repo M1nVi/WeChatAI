@@ -6,6 +6,7 @@ import time
 from flask import Flask, request, make_response, jsonify
 import xmltodict
 from wxcloudrun import app
+from wxcloudrun import views
 
 # 微信服务器配置信息，从环境变量获取
 APP_ID = os.getenv("APP_ID")  # 获取APP_ID
