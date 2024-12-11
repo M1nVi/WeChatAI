@@ -8,7 +8,7 @@ from wxcloudrun import app
 
 # 微信服务器配置信息
 APP_ID = "wxc2f9980cd3fae925"
-APP_SECRET = "954638708"
+APP_SECRET = "f4addf6f04f2e8374a1a0db23e7ed3fb"
 
 # AI平台API接口
 AI_API_URL = "https://dashscope.aliyuncs.com/compatible-mode/v1"
