@@ -2,17 +2,21 @@ import sys
 import os
 import requests
 import hashlib
+import time
 from flask import Flask, request, make_response, jsonify
 import xmltodict
 from wxcloudrun import app
 
-# 微信服务器配置信息
-APP_ID = "wxc2f9980cd3fae925"
-APP_SECRET = "f4addf6f04f2e8374a1a0db23e7ed3fb"
+# 微信服务器配置信息，从环境变量获取
+APP_ID = os.getenv("APP_ID")  # 获取APP_ID
+APP_SECRET = os.getenv("APP_SECRET")  # 获取APP_SECRET
+
+if not APP_ID or not APP_SECRET:
+    raise ValueError("请确保环境变量中设置了 APP_ID 和 APP_SECRET")
 
 # AI平台API接口
 AI_API_URL = "https://dashscope.aliyuncs.com/compatible-mode/v1"
-API_KEY = os.getenv('api_key')  # 通过环境变量获取API密钥
+API_KEY = os.getenv('API_KEY')  # 通过环境变量获取API密钥
 if not API_KEY:
     raise ValueError("API 密钥 API_KEY 没有设置")
 
