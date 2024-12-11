@@ -11,7 +11,7 @@ APP_ID = "wxc2f9980cd3fae925"
 APP_SECRET = "954638708"
 
 # AI平台API接口
-AI_API_URL = "https://your-api-endpoint"
+AI_API_URL = "https://dashscope.aliyuncs.com/compatible-mode/v1"
 API_KEY = os.getenv('api_key')  # 通过环境变量获取API密钥
 if not API_KEY:
     raise ValueError("API 密钥 API_KEY 没有设置")
