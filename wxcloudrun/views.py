@@ -15,7 +15,7 @@ API_KEY = os.getenv("API_KEY")  # 从环境变量获取API密钥
 if not API_KEY:
     raise ValueError("请确保环境变量中设置了 API_KEY")
 
-@app.route('/wechat', methods=['POST'])
+@app.route('/api/wechat', methods=['POST'])
 def wechat():
     # 处理用户发送的消息
     json_data = request.get_json()
