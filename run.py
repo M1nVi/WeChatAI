@@ -26,14 +26,6 @@ def get_access_token():
     response = requests.get(url)
     return response.json().get("access_token")
 
-def check_signature(signature, timestamp, nonce):
-    # 验证签名
-    tmp_list = [TOKEN, timestamp, nonce]
-    tmp_list.sort()
-    tmp_str = ''.join(tmp_list)
-    hashcode = hashlib.sha1(tmp_str.encode('utf-8')).hexdigest()
-    return hashcode == signature
-
 def parse_message(xml_data):
     # 解析XML格式的微信消息
     try:
@@ -87,42 +79,30 @@ def send_reply(reply_content, from_user, to_user):
     """
     return reply
 
-@app.route('/wechat', methods=['GET', 'POST'])
+@app.route('/wechat', methods=['POST'])
 def wechat():
-    if request.method == 'GET':
-        # 验证服务器有效性
-        signature = request.args.get('signature')
-        timestamp = request.args.get('timestamp')
-        nonce = request.args.get('nonce')
-        echostr = request.args.get('echostr')
-        if check_signature(signature, timestamp, nonce):
-            return make_response(echostr)
-        else:
-            return make_response("Invalid Request")
+    # 处理用户消息
+    xml_data = request.data
+    msg = parse_message(xml_data)
     
-    elif request.method == 'POST':
-        # 处理用户消息
-        xml_data = request.data
-        msg = parse_message(xml_data)
-        
-        # 获取用户消息内容
-        user_message = msg.get('Content', '')
-        if not user_message:
-            return make_response("success")
-        
-        # 意图识别
-        intent = recognize_intent(user_message)
-        
-        # 调用AI API获取回复
-        ai_response = get_response_from_ai(user_message, API_KEY)
-        
-        # 格式化回复内容
-        reply_content = format_reply(ai_response, intent)
-        
-        # 发送回复
-        reply = send_reply(reply_content, msg['FromUserName'], msg['ToUserName'])
-        
-        return make_response(reply)
+    # 获取用户消息内容
+    user_message = msg.get('Content', '')
+    if not user_message:
+        return make_response("success")
+    
+    # 意图识别
+    intent = recognize_intent(user_message)
+    
+    # 调用AI API获取回复
+    ai_response = get_response_from_ai(user_message, API_KEY)
+    
+    # 格式化回复内容
+    reply_content = format_reply(ai_response, intent)
+    
+    # 发送回复
+    reply = send_reply(reply_content, msg['FromUserName'], msg['ToUserName'])
+    
+    return make_response(reply)
 
 if __name__ == '__main__':
     app.run(host=sys.argv[1], port=sys.argv[2])
