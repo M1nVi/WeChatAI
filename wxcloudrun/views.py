@@ -7,7 +7,7 @@ from flask import Blueprint
 
 bp = Blueprint('wxcloudrun', __name__)
 
-@bp.route('/wechat', methods=['GET', 'POST'])
+@bp.route('/api/wechat', methods=['GET', 'POST'])
 def wechat():
     if request.method == 'GET':
         # 验证消息来源（免鉴权方式仅返回 echostr）
