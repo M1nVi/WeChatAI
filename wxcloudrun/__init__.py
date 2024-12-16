@@ -2,6 +2,8 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import pymysql
 from config import Config  # 引入封装的 Config 类
+from wxcloudrun.views import bp  # 引入 views.py 中定义的蓝图
+app.register_blueprint(bp)
 
 # 因MySQLDB不支持Python3，使用pymysql扩展库代替MySQLDB库
 pymysql.install_as_MySQLdb()
