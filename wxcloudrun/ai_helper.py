@@ -4,7 +4,7 @@ from config import Config
 def call_ai_api(prompt):
     """调用 AI 大模型 API 并返回响应"""
     headers = {
-        "Authorization": f"Bearer {Config.AI_API_KEY}",
+        "Authorization": f"Bearer {Config.ai_key}",
         "Content-Type": "application/json",
     }
     data = {
@@ -20,7 +20,7 @@ def call_ai_api(prompt):
     
     try:
         # 发送请求
-        response = requests.post(Config.AI_API_URL, json=data, headers=headers)
+        response = requests.post(Config.ai_url, json=data, headers=headers)
         
         # 打印响应状态码，便于调试
         print(f"Response status code: {response.status_code}")
