@@ -22,10 +22,15 @@ def wechat():
                 return make_response("Invalid request body", 400)
 
             user_input = json_data['content']
+            print(f"User input: {user_input}")  # 打印用户输入，调试用
+            
             # 调用 AI 模型生成回复
             ai_response = call_ai_api(user_input)
+            print(f"AI Response: {ai_response}")  # 打印 AI 回复，调试用
+            
             return make_response(jsonify({"reply": ai_response}))  # 返回 AI 回复
 
         except Exception as e:
-            print(f"Error handling message: {e}")
+            print(f"Error handling message: {e}")  # 打印异常信息
             return make_response("Internal Server Error", 500)
+
