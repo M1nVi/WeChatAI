@@ -12,3 +12,5 @@ requests==2.26.0
 xmltodict==0.12.0
 wechatpy   
 gunicorn
+cryptography
+pycryptodome
