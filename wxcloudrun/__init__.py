@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import pymysql
-import config
+from config import Config
 
 # 因MySQLDB不支持Python3，使用pymysql扩展库代替MySQLDB库
 pymysql.install_as_MySQLdb()
@@ -21,4 +21,4 @@ db = SQLAlchemy(app)
 from wxcloudrun import views
 
 # 加载配置
-app.config.from_object('config')
+app.config.from_object('Config')
