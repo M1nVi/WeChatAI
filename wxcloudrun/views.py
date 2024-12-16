@@ -2,7 +2,7 @@ from flask import request, make_response
 from wechatpy import parse_message, create_reply
 from config import Config
 from wxcloudrun.ai_helper import call_ai_api
-
+from wxcloudrun.response import make_succ_response, make_err_response  # Import make_err_response
 from flask import Blueprint
 
 bp = Blueprint('wxcloudrun', __name__)
