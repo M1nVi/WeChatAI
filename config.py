@@ -1,9 +1,9 @@
 import os
 
-class Config:
-    # 是否开启debug模式
-    DEBUG = True
+# 是否开启debug模式
+DEBUG = True
 
+class Config:
     # 读取数据库环境变量
     username = os.environ.get("MYSQL_USERNAME", 'root')
     password = os.environ.get("MYSQL_PASSWORD", 'root')
