@@ -14,3 +14,4 @@ wechatpy
 gunicorn
 cryptography
 pycryptodome
+openai
