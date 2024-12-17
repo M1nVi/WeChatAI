@@ -17,7 +17,7 @@ def call_ai_api(prompt):
                 {'role': 'system', 'content': 'You are a helpful assistant.'},
                 {'role': 'user', 'content': prompt},
             ],
-            max_tokens=150  # 设置最大输出 token 数
+            max_tokens=1500  # 设置最大输出 token 数
         )
 
         # 打印返回的 JSON 数据，方便调试
