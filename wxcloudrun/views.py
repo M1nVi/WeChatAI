@@ -45,8 +45,7 @@ def wechat():
                 # 生成 XML 响应
                 response_xml = make_xml_response(msg.source, msg.target, ai_response)
                 response = make_response(response_xml.strip())
-                response.content_type = 'application/xml'
-                response.headers['Content-Encoding'] = 'identity'  # 禁用 gzip 压缩
+                response.content_type = 'application/xml'           
                 return response
 
             else:
