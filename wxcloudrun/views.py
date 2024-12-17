@@ -27,13 +27,13 @@ def split_long_text(text, max_length=600):
     """
     result = []
     while len(text) > max_length:
-        # 找到离 max_length 最近的换行或句号分割点
+        # 找到接近 max_length 的标点符号分割点（优先使用句号）
         split_point = text.rfind('。', 0, max_length)
-        if split_point == -1:
-            split_point = max_length  # 如果没有找到标点符号，则直接截断
-        result.append(text[:split_point + 1])  # 包括标点符号
-        text = text[split_point + 1:]  # 剩余部分继续处理
-    result.append(text)  # 添加最后一段
+        if split_point == -1:  # 如果找不到合适的分割点，强制按 max_length 截断
+            split_point = max_length
+        result.append(text[:split_point + 1])  # 包括分隔符
+        text = text[split_point + 1:]  # 剩余文本
+    result.append(text)  # 添加剩余部分
     return result
 
 @bp.route('/api/wechat', methods=['GET', 'POST'])
@@ -58,8 +58,12 @@ def wechat():
                 # 分割长文本回复
                 responses = split_long_text(ai_response, max_length=600)
 
-                # 生成符合微信标准的 XML 回复，拼接分段文本
-                full_response = "\n".join(responses)
+                # 微信只允许单次返回一条消息，所以提示用户逐步获取剩余内容
+                full_response = responses[0]  # 仅发送第一段
+                if len(responses) > 1:
+                    full_response += "\n（消息过长，回复 '继续' 查看剩余内容）"
+
+                # 生成符合微信标准的 XML 回复
                 response_xml = make_xml_response(msg.source, msg.target, full_response)
                 print(f"Response XML: {response_xml.strip()}")
 
