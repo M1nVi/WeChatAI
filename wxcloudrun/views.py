@@ -29,10 +29,11 @@ def wechat():
         return make_response(echostr)
 
     elif request.method == 'POST':
+        # 解析用户消息
         try:
             # 解析微信推送的 XML 消息
             msg = parse_message(request.data)
-            print(f"Received message: {msg}")  # 调试日志
+            print(f"Received message: {msg}")  # 记录接收到的消息，便于调试
 
             if msg.type == 'text':  # 仅处理文本消息
                 user_input = msg.content
@@ -42,29 +43,30 @@ def wechat():
                 ai_response = call_ai_api(user_input)
                 print(f"AI response: {ai_response}")
 
-                # 生成 XML 响应
+                # 生成符合微信标准的 XML 回复
                 response_xml = make_xml_response(msg.source, msg.target, ai_response)
+                print(f"Response XML: {response_xml.strip()}")
+
+                # 返回 XML 格式数据
                 response = make_response(response_xml.strip())
-                response.content_type = 'application/xml'           
+                response.content_type = 'application/xml'
                 return response
 
             else:
-                # 非文本消息的默认回复
+                # 非文本消息的回复
                 default_response = "暂时只支持文本消息哦！"
                 response_xml = make_xml_response(msg.source, msg.target, default_response)
                 response = make_response(response_xml.strip())
                 response.content_type = 'application/xml'
-                response.headers['Content-Encoding'] = 'identity'
                 return response
 
         except Exception as e:
             print("Error handling message:")
-            traceback.print_exc()  # 打印错误堆栈
+            traceback.print_exc()  # 打印错误堆栈，便于调试
 
             # 返回错误信息，确保微信服务器不会异常
             error_response = "处理请求时发生错误，请稍后再试。"
-            response_xml = make_xml_response("user", "server", error_response)
+            response_xml = make_xml_response("user", "server", error_response)  # 模拟回复
             response = make_response(response_xml.strip())
             response.content_type = 'application/xml'
-            response.headers['Content-Encoding'] = 'identity'
             return response
